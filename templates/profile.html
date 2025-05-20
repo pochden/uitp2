@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <!-- Кнопка темы будет добавлена сюда скриптом -->
+        <button id="menu-toggle">☰</button>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="https://vstu.by/news">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <!-- Если пользователь авторизован -->
+            {% if username %}
+            <h2>Добро пожаловать, {{ username }}!</h2>
+            <p>Это ваш личный кабинет.</p>
+            <p><a href="/tours">Заказать экскурсию</a></p>
+            <a href="/logout">Выйти</a>
+
+            <!-- Если пользователь не авторизован -->
+            {% else %}
+                <h2>Вход</h2>
+                <form method="post">
+                    <label for="username">Имя пользователя:</label><br>
+                    <input type="text" id="username" name="username" required><br>
+                    <label for="password">Пароль:</label><br>
+                    <input type="password" id="password" name="password" required><br>
+                    <button type="submit" name="login">Войти</button>
+                </form>
+                <h2>Регистрация</h2>
+                <form method="post">
+                    <label for="username">Имя пользователя:</label><br>
+                    <input type="text" id="username" name="username" required><br>
+                    <label for="password">Пароль:</label><br>
+                    <input type="password" id="password" name="password" required><br>
+                    <button type="submit" name="register">Зарегистрироваться</button>
+                </form>
+                <!-- Отображение ошибок -->
+                {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endif %}
+            {% endif %}
+        </section>
+    </main>
+    <script src="theme.js"></script>
+</body>
+</html>

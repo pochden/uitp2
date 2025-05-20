@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VSTU maps - Заказ экскурсий</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <button id="menu-toggle">☰</button>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="{{ url_for('news') }}">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Заказ экскурсий</h2>
+            <form id="tourForm" method="POST" action="/submit_tour" style="display: block;">
+                <label for="name">Имя:</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="phone">Телефон:</label><br>
+                <input type="text" id="phone" name="phone" required><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email"><br>
+                <label for="date">Дата:</label><br>
+                <input type="date" id="date" name="date" required><br><br>
+                <button type="button" onclick="showConfirmation()">Отправить</button>
+            </form>
+        
+            <div id="confirmation" style="display: none;">
+                <h3>Проверьте данные:</h3>
+                <p>Имя: <span id="confirmName"></span></p>
+                <p>Телефон: <span id="confirmPhone"></span></p>
+                <p>Email: <span id="confirmEmail"></span></p>
+                <p>Дата: <span id="confirmDate"></span></p>
+                
+                <a href="https://boosty.to/vstumaps" target="_blank">Оплатить</a>
+                <button onclick="editData()">Редактировать</button>
+                <button onclick="confirmAndSubmit()">Я подтверждаю правильность данных и факт оплаты экскурсии</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 VSTU maps. Все права защищены.</p>
+    </footer>
+
+    <script>
+       function showConfirmation() {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const date = document.getElementById('date').value;
+
+    // Проверка имени
+    if (!name) {
+        alert('Поле "Имя" обязательно для заполнения');
+        return;
+    }
+
+    // Проверка телефона
+    if (!phone.match(/^\+?[0-9]{11,15}$/)) {
+        alert('Некорректный номер телефона');
+        return;
+    }
+
+    // Проверка email (если заполнен)
+    if (email && !email.match(/^[^@]+@[^@]+\.[^@]+$/)) {
+        alert('Некорректный email');
+        return;
+    }
+
+    // Проверка даты
+    if (!date) {
+        alert('Поле "Дата" обязательно для заполнения');
+        return;
+    }
+
+    // Отображение данных в подтверждении
+    document.getElementById('confirmName').textContent = name;
+    document.getElementById('confirmPhone').textContent = phone;
+    document.getElementById('confirmEmail').textContent = email || "—";
+    document.getElementById('confirmDate').textContent = date;
+
+    // Переключение между формой и подтверждением
+    document.getElementById('tourForm').style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
+}
+
+        function confirmAndSubmit() {
+            document.getElementById('tourForm').submit();
+        }
+
+        function editData() {
+            document.getElementById('tourForm').style.display = 'block';
+            document.getElementById('confirmation').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

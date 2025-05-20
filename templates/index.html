@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSTU maps - Главная</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+    <style>
+        .hero {
+            background: linear-gradient(to right, #007BFF, #0056b3);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: var(--bg-color);
+            border-left: 4px solid #007BFF;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            color: #007BFF;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .gallery img {
+            width: 100%;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .news {
+            margin: 2rem 0;
+        }
+        .news-item {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #28a745;
+        }
+        .contact-info {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .dark-theme .feature-card {
+            background-color: #2d2d2d;
+        }
+        .dark-theme .news-item {
+            background-color: #2d2d2d;
+        }
+        .dark-theme .contact-info {
+            background-color: #2d2d2d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <button id="menu-toggle">☰</button>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}" class="active">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/ ">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="https://vstu.by/news ">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Добро пожаловать в Витебский государственный технологический университет!</h1>
+            <p class="lead">Найдите всю необходимую информацию о нашем университете в одном месте</p>
+            <a href="#about" class="btn-primary">Узнать больше</a>
+        </section>
+
+        <section id="about">
+            <h2>О ВГТУ</h2>
+            <p>Витебский государственный технологический университет (ВГТУ) – ведущий технический вуз Беларуси, предоставляющий качественное высшее образование более чем по 30 специальностям.</p>
+            <p>Основанный в 1965 году, университет готовит высококвалифицированных инженеров, технологов, экономистов и специалистов в области информационных технологий.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>Карта корпусов</h3>
+                <p>Найдите нужный корпус и аудиторию быстро и легко с помощью интерактивной карты университета.</p>
+                <a href="{{ url_for('map') }}" class="btn-link">Перейти к карте</a>
+            </div>
+            <div class="feature-card">
+                <h3>Кафедры</h3>
+                <p>Ознакомьтесь с информацией о всех кафедрах университета, их руководителях и контактных данных.</p>
+                <a href="{{ url_for('departments') }}" class="btn-link">Посмотреть кафедры</a>
+            </div>
+            <div class="feature-card">
+                <h3>Руководства</h3>
+                <p>Полезные материалы для абитуриентов, студентов и преподавателей по всем аспектам учебного процесса.</p>
+                <a href="{{ url_for('guides') }}" class="btn-link">Смотреть руководства</a>
+            </div>
+            <div class="feature-card">
+                <h3>Расписание</h3>
+                <p>Получите быстрый доступ к актуальным расписаниям занятий для всех факультетов.</p>
+                <a href="https://schedule.vstu.by/ " target="_blank" class="btn-link">Открыть расписание</a>
+            </div>
+        </section>
+
+        <section class="gallery">
+            <h2>Галерея</h2>
+            <div class="gallery">
+                <img src="{{ url_for('static', filename='photos/uni1.jpg') }}" alt="">
+                <img src="{{ url_for('static', filename='photos/uni5.jpg') }}"  alt="">
+                <img src="{{ url_for('static', filename='photos/star.jpg') }}" alt="">
+                <img src="{{ url_for('static', filename='photos/uni3.jpg') }}" alt="">
+            </div>
+        </section>
+
+        <section class="news">
+            <h2>Последние новости</h2>
+            <div class="news-item">
+                <h3>Круглый стол</h3>
+                <p class="text-sm">14 мая 2025 года </p>
+                <p>14 мая 2025 года в главном корпусе ВГТУ прошёл Международный научно-практический круглый стол.</p>
+            </div>
+            <div class="news-item">
+                <h3>Соревнования по легкой атлетике среди студентов первых курсов </h3>
+                <p class="text-sm">12 мая 2025</p>
+                <p>12 мая 2025 ода на стадионе Витебского государственного технологического университета состоялось масштабное спортивное мероприятие по легкой атлетике . Участниками традиционно стали студенты первого курса четырех факультетов ВГТУ.</p>
+            </div>
+            <div class="news-item">
+                <h3>Новый проект</h3>
+                <p class="text-sm">5 дебрая 2024</p>
+                <p>В университете реализуется проект по воссозданию архивных фотографий в современном антураже.</p>
+            </div>
+        </section>
+
+        <section class="contact-info">
+            <h2>Контактная информация</h2>
+            <p><strong>Адрес:</strong> 210038, Республика Беларусь, г. Витебск, Московский проспект, 72</p>
+            <p><strong>Телефон:</strong> +375 (212) 49-53-42</p>
+            <p><strong>Email:</strong> info@vstu.by</p>
+            <p><strong>Официальный сайт:</strong> <a href="https://vstu.by " target="_blank">www.vstu.by</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 VSTU maps. Все права защищены.</p>
+    </footer>
+
+    <script src="theme.js"></script>
+</body>
+</html>

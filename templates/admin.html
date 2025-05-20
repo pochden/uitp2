@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="https://vstu.by/news">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Административная панель</h2>
+        
+        <section>
+            <h3>Зарегистрированные пользователи:</h3>
+            <ul>
+                {% for user in users %}
+                    <li>
+                        {{ user }}
+                        <form method="POST" action="/delete_user" style="display:inline;">
+                            <input type="hidden" name="username" value="{{ user }}">
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+            
+            <h3>Добавить нового пользователя:</h3>
+            <form method="POST" action="/add_user">
+                <label for="username">Имя пользователя:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Добавить</button>
+            </form>
+        </section>
+        
+        <section>
+            <h3>Заказы экскурсий:</h3>
+            <table border="1">
+                <tr>
+                    <th>Пользователь</th>
+                    <th>Имя</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                    <th>Дата</th>
+                    <th>Оплачено?</th>
+                </tr>
+                {% for tour in tours %}
+                <tr>
+                    <td>{{ tour.user }}</td>
+                    <td>{{ tour.name }}</td>
+                    <td>{{ tour.phone }}</td>
+                    <td>{{ tour.email }}</td>
+                    <td>{{ tour.date }}</td>
+                    <td>
+                        <form method="POST" action="/update_payment">
+                            <input type="hidden" name="tour_index" value="{{ loop.index0 }}">
+                            <select name="paid">
+                                <option value="Да" {% if tour.paid == 'Да' %}selected{% endif %}>Да</option>
+                                <option value="Нет" {% if tour.paid == 'Нет' %}selected{% endif %}>Нет</option>
+                            </select>
+                            <button type="submit">Сохранить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+</body>
+</html>

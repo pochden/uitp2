@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSTU maps - Кафедры</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+    <style>
+        /* Стили для выпадающих кафедр */
+        .department-button {
+            background: none;
+            border: none;
+            color: inherit;
+            text-align: left;
+            padding: 15px 0;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            padding-right: 30px;
+            transition: background-color 0.3s;
+        }
+        .department-button:hover {
+            text-decoration: underline;
+        }
+        .arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s;
+            font-size: 12px;
+        }
+        .department-button.active .arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        .department-content {
+            display: none;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #007BFF;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease-in-out;
+        }
+        /* Темные стили для контента */
+        .dark-theme .department-content {
+            border-left-color: #add8e6;
+            background-color: #2d2d2d;
+        }
+        .dark-theme .department-button:hover {
+            color: #add8e6;
+        }
+        /* Стили для информации о кафедре */
+        .department-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .department-info div {
+            display: flex;
+            flex-direction: column;
+        }
+        .department-info span.label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            color: var(--text-color-secondary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <!-- Кнопка темы будет добавлена сюда скриптом -->
+        <button id="menu-toggle">☰</button>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/ ">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}" class="active">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="https://vstu.by/news ">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Кафедры университета</h2>
+            <ul style="list-style: none; padding-left: 0;">
+                <!-- Кафедра 1 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept1')">
+                        Маркетинг и финансы
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept1" class="department-content">
+                        <h3>Маркетинг и финансы</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Советникова Ольга Петровна, кандидат экономических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, пр-т Московский, 72 Б , учебно-лабораторный корпус № 4, 5 этаж</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующей кафедры: 513<br>Преподавательская: 511<br>Лаборантская: 518</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-62<br>Сайт: <a href="https://mif.vstu.by " target="_blank">mif.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 2 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept2')">
+                        Математика и информационные технологии
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept2" class="department-content">
+                        <h3>Математика и информационные технологии</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Никонова Татьяна Викторовна, кандидат физико-математических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, Московский пр-т, 72 Б, учебно-лабораторный корпус № 4, 2 и 5 этаж</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего: 512<br>Лаборантская (математика, инженерная графика): 514<br>Лаборантская (информатика): 210</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-64<br>Сайт: <a href="https://miit.vstu.by " target="_blank">miit.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 3 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept3')">
+                        Экономика и электронный бизнес
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept3" class="department-content">
+                        <h3>Экономика и электронный бизнес</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Касаева Тамара Васильевна, кандидат технических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, пр-т Московский, 72 Б, учебно-лабораторный корпус №4</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующей кафедры: 315<br>Преподавательская: 313<br>Лаборантская: 309</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-63<br>Сайт: <a href="https://eeb.vstu.by " target="_blank">eeb.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 4 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept4')">
+                        Автоматизация производственных процессов
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept4" class="department-content">
+                        <h3>Автоматизация производственных процессов</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Науменко Андрей Михайлович, кандидат технических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, Беларусь, г. Витебск, Московский пр., 72, учебно-лабораторный корпус № 1</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего кафедрой: 160<br>Преподавательская: 159</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-56<br>Сайт: <a href="https://at.vstu.by " target="_blank">at.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 5 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept5')">
+                        Информационные системы и технологии
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept5" class="department-content">
+                        <h3>Информационные системы и технологии</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Казаков Вадим Евгеньевич, кандидат технических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, Беларусь, г. Витебск, Московский пр., 72, учебно-лабораторный корпус № 1</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего кафедрой: 317<br>Преподавательская: 317, 323</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-42<br>Email: isap@vstu.by<br>Сайт: <a href="https://isit.vstu.by " target="_blank">isit.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 6 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept6')">
+                        Технология машиностроения
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept6" class="department-content">
+                        <h3>Технология машиностроения</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Савицкий Василий Васильевич, кандидат технических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, Беларусь, г. Витебск, Московский пр., 72, учебно-лабораторный корпус № 5</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего кафедрой: 300<br>Зав. лабораторией: 303<br>Преподавательская: 301</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-84<br>Сайт: <a href="https://tm.vstu.by " target="_blank">tm.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 7 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept7')">
+                        Теплоэнергетика
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept7" class="department-content">
+                        <h3>Теплоэнергетика</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Жерносек Сергей Васильевич, кандидат технических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, Беларусь, г. Витебск, Московский пр., 72, учебно-лабораторный корпус № 5</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего кафедрой: 200<br>Лаборантская: 203<br>Преподавательская: 201</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-44<br>Сайт: <a href="https://te.vstu.by " target="_blank">te.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 8 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept8')">
+                        Конструирование и технология одежды и обуви
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept8" class="department-content">
+                        <h3>Конструирование и технология одежды и обуви</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Довыденкова Вера Петровна, доцент, кандидат технических наук</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038 Беларусь, г. Витебск, пр-т Московский, 72, учебно-лабораторный корпус № 1</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующей кафедры: 332<br>Преподавательская: 410<br>Зав. лабораторией: 346<br>Лаборатория швейная: 347a</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-57<br>Сайт: <a href="https://kito.vstu.by " target="_blank">kito.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 9 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept9')">
+                        Техническое регулирование и товароведение
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept9" class="department-content">
+                        <h3>Техническое регулирование и товароведение</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Рыклин Дмитрий Борисович, профессор, доктор технических наук</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, Республика Беларусь, г. Витебск, Московский пр-т, 72, учебно-лабораторный корпус № 5</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего кафедрой: 258<br>Кабинеты ведущих специалистов: 274, 400</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-47<br>Сайт: <a href="https://trt.vstu.by " target="_blank">trt.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 10 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept10')">
+                        Экология и химические технологии
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept10" class="department-content">
+                        <h3>Экология и химические технологии</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Ясинская Наталья Николаевна, доцент, доктор технических наук</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, Московский проспект, 72, учебно-лабораторный корпус № 1</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Аудитории: 424, 432, 425</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00<br>Обеденный перерыв: 12:00 - 13:00</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-55<br>Сайт: <a href="https://eicht.vstu.by " target="_blank">eicht.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 11 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept11')">
+                        Дизайн и мода
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept11" class="department-content">
+                        <h3>Дизайн и мода</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Абрамович Наталья Анатольевна, кандидат технических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, ул. Правды, 59, учебно-лабораторный корпус № 2</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующей кафедры: 29<br>Преподавательская: 21а, 32а, 36, 38<br>Лаборантская: 25в</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00 (обед 12:00-13:00)</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 22-77-15<br>Сайт: <a href="https://design.vstu.by " target="_blank">design.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 12 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept12')">
+                        Иностранные языки
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept12" class="department-content">
+                        <h3>Иностранные языки</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующая кафедрой</span>
+                                <p>Костырева Светлана Степановна, кандидат филологических наук, доцент</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, Московский пр-т, 72, учебно-лабораторный корпус № 5</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего кафедрой: 107<br>Ведущий специалист: 101<br>Преподавательская: 101</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00 (обед 12:00-13:00)</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-52<br>Email: forlang.vstu@yandex.by<br>Сайт: <a href="https://forlang.vstu.by " target="_blank">forlang.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 13 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept13')">
+                        Физическая культура и спорт
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept13" class="department-content">
+                        <h3>Физическая культура и спорт</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Мусатов Александр Гарриевич</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, Московский пр-т, 72 Б, учебно-лабораторный корпус № 1</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего: 113а<br>Преподавательская: 125</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00 (обед 12:00-13:00)</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-58<br>Сайт: <a href="https://fis.vstu.by " target="_blank">fis.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Кафедра 14 -->
+                <li>
+                    <button class="department-button" onclick="toggleDepartment('dept14')">
+                        Социально-гуманитарные дисциплины
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div id="dept14" class="department-content">
+                        <h3>Социально-гуманитарные дисциплины</h3>
+                        <div class="department-info">
+                            <div>
+                                <span class="label">Заведующий кафедрой</span>
+                                <p>Субботин Александр Александрович, кандидат исторических наук</p>
+                            </div>
+                            <div>
+                                <span class="label">Адрес</span>
+                                <p>210038, г. Витебск, Московский просп., 72, учебно-лабораторный корпус № 4, четвертый этаж</p>
+                            </div>
+                            <div>
+                                <span class="label">Кабинеты</span>
+                                <p>Кабинет заведующего: 410<br>Преподавательская: 405а<br>Кабинет: 407</p>
+                            </div>
+                            <div>
+                                <span class="label">Режим работы</span>
+                                <p>Понедельник - Пятница: 08:00 - 17:00 (обед 12:00-13:00)</p>
+                            </div>
+                            <div>
+                                <span class="label">Контакты</span>
+                                <p>Телефон: +375 (212) 49-53-51<br>Email: sgd.vstu@yandex.by<br>Сайт: <a href="https://sgd.vstu.by " target="_blank">sgd.vstu.by</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 VSTU maps. Все права защищены.</p>
+    </footer>
+
+    <script>
+        function toggleDepartment(deptId) {
+            const content = document.getElementById(deptId);
+            const button = event.currentTarget;
+            // Переключаем видимость
+            const isVisible = content.style.display === 'block';
+            content.style.display = isVisible ? 'none' : 'block';
+            // Меняем класс кнопки для анимации стрелки
+            button.classList.toggle('active');
+        }
+    </script>
+    
+    <script src="theme.js"></script>
+</body>
+</html>

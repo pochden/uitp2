@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSTU maps - Фотографии</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <button id="menu-toggle">☰</button>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/  ">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="https://vstu.by/news">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+      <section class="photos_album_page">
+          <h2>Фотографии</h2>
+          <div class="photos_container_grid">
+            {% for photo in photos %}
+            <div class="photos_row" data-url="{{ url_for('static', filename='photos/' + photo) }}"></div>
+            {% else %}
+                <p>Пока нет фотографий.</p>
+            {% endfor %}
+        </div>
+      </section>
+   </main>
+
+    <footer>
+        <p>&copy; 2025 VSTU maps. Все права защищены.</p>
+    </footer>
+
+    <!-- Модальное окно -->
+    <div id="photo-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);">
+      <span class="close-btn" onclick="closeModal()" style="color: white; font-size: 30px; position: absolute; top: 10px; right: 20px; cursor: pointer;">×</span>
+      <img id="modal-image" style="max-width: 90%; max-height: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+  </div>
+
+    <script>
+            document.addEventListener('DOMContentLoaded', function () {
+            const photos = document.querySelectorAll('.photos_row');
+            photos.forEach(photo => {
+                const imageUrl = photo.dataset.url;
+                photo.style.backgroundImage = `url(${imageUrl})`; // Устанавливаем фон
+                photo.addEventListener('click', () => {
+                    const modal = document.getElementById('photo-modal');
+                    const modalImage = document.getElementById('modal-image');
+                    modal.style.display = 'block';
+                    modalImage.src = imageUrl; // Устанавливаем изображение в модальном окне
+                });
+            });
+
+            // Закрытие модального окна кликом по фону
+            const modal = document.getElementById('photo-modal');
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) closeModal();
+            });
+        });
+
+        // Функция закрытия модального окна
+        function closeModal() {
+            const modal = document.getElementById('photo-modal');
+            modal.style.display = 'none';
+        }
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSTU maps - Карта корпусов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>VSTU maps</h1>
+        <!-- Кнопка темы будет добавлена сюда скриптом -->
+        <button id="menu-toggle">☰</button>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Главная</a></li>
+                <li><a href="{{ url_for('map') }}">Карта корпусов</a></li>
+                <li><a href="{{ url_for('photos') }}">Фотографии</a></li>
+                <li><a href="https://schedule.vstu.by/">Расписание</a></li>
+                <li><a href="{{ url_for('departments') }}">Кафедры</a></li>
+                <li><a href="{{ url_for('guides') }}">Руководства</a></li>
+                <li><a href="{{ url_for('places') }}">Места для времяпрепровождения</a></li>
+                <li><a href="https://vstu.by/news">Новости</a></li>
+                <li><a href="{{ url_for('profile') }}">Личный кабинет</a></li>
+            </ul>
+        </nav>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Карта корпусов</h2>
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A4cb14bb42f85838d476235ddc89fa89ffd8e0ca9c2103283c163d005657af7f6&amp;width=100%25&amp;height=370&amp;lang=ru_RU&amp;scroll=true&amp;apikey=b7ec1c57-e07d-46df-8966-4f65ce1cf826"></script>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 VSTU maps. Все права защищены.</p>
+    </footer>
+	<script src="theme.js"></script>
+    </body>
+</html>

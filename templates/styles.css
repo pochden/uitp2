@@ -1,0 +1,170 @@
+
+        /* Общий стиль для шрифта Arial */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Убираем отступы по умолчанию */
+        }
+
+        /* Стиль для header */
+        header {
+            background-color: #f8f9fa; /* Цвет фона */
+            padding: 10px 0; /* Отступ сверху и снизу */
+        }
+
+        /* Стиль для горизонтального списка */
+        nav {
+            width: 100%; /* Растягиваем на всю ширину */
+            display: flex;
+            justify-content: space-between; /* Равномерно распределяем элементы */
+            align-items: center; /* Выравниваем по центру по вертикали */
+            padding: 0 20px; /* Отступы слева и справа */
+            box-sizing: border-box; /* Учитываем padding в ширине */
+        }
+
+        nav ul {
+            list-style-type: none; /* Убираем маркеры списка */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Располагаем элементы горизонтально */
+            width: 200%; /* Растягиваем на всю ширину */
+        }
+
+        /* Стиль для элементов списка */
+        nav ul li {
+            flex: 1; /* Равномерно распределяем пространство между элементами */
+            text-align: center; /* Центрируем текст внутри элементов */
+        }
+
+        /* Стиль для ссылок в списке */
+        nav ul li a {
+            text-decoration: none; /* Убираем подчеркивание у ссылок */
+            color: #333; /* Цвет текста */
+            font-weight: bold; /* Жирный шрифт */
+            display: block; /* Делаем ссылку блочным элементом */
+            padding: 10px; /* Добавляем внутренние отступы */
+        }
+
+        /* Наведение на ссылки */
+        nav ul li a:hover {
+            color: #007BFF; /* Изменяем цвет при наведении */
+            background-color: #e9ecef; /* Добавляем фоновый цвет */
+            border-radius: 5px; /* Закругляем углы */
+        }
+/* Добавьте эти стили в ваш CSS */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+/* Обновленный стиль футера */
+footer {
+    margin-top: auto;
+    text-align: center;
+    font-size: 14px;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+    
+	/* После добавления жс */
+	:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --header-bg: #f8f9fa;
+    --nav-link-color: #333333;
+    --footer-bg: #f8f9fa;
+    --toggle-btn-bg: #f8f9fa;
+}
+
+.dark-theme {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --header-bg: #2d2d2d;
+    --nav-link-color: #e0e0e0;
+    --footer-bg: #2d2d2d;
+    --toggle-btn-bg: #3a3a3a;
+	color: white;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    background-color: var(--header-bg);
+    padding: 10px 0;
+    position: relative;
+}
+
+#theme-toggle {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--toggle-btn-bg);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+	color: var(--text-color);
+}
+
+nav ul li a {
+    color: var(--nav-link-color);
+}
+
+footer {
+    background-color: var(--footer-bg);
+}
+
+.dark-theme main a {
+    color: #add8e6; /* Светло-голубой */
+    font-weight: bold;
+}
+
+.dark-theme main a:visited {
+    color: #ff1493; /* Ярко-розовый */
+    font-weight: normal;
+}
+
+body.dark-theme {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+body.dark-theme header {
+    background-color: #2d2d2d;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
